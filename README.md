@@ -28,25 +28,24 @@ git clone https://github.com/defi-ventures/ethermint.git
 2. Install the following for setup
 
 ```bash
-apt get update
-apt install make build-essential jq
-wget https://golang.org/dl/go1.16.6.linux-amd64.tar.gz
-rm -rf /usr/local/go && tar -C /usr/local -xzf go1.16.6.linux-amd64.tar.gz
-export PATH=$PATH:/usr/local/go/bin
+apt-get update
+apt-get install make build-essential jq
+snap install go --classic
 ```
 
 3. Change the value of KEY, CHAINID, MONIKER, MNEMONIC in validator_node_setup.sh before running the validator node setup.
 You need to generate a mnemonic for the setup
 ```bash
 cd ~/ethermint
-./validator-node.sh
+bash setup_validator.sh
 ```
 
 4. Replace the genesis file in ~/.blockxd/config/
 ```
 {
-   "genesis_time":"2021-12-21T07:20:53.653111104Z",
-   "chain_id":"blockx-11",
+   "genesis_time":"2022-03-21T17:53:40.332119466Z",
+   "chain_id":"blockx_12345-12345",
+   "initial_height":"1",
    "consensus_params":{
       "block":{
          "max_bytes":"22020096",
@@ -55,135 +54,85 @@ cd ~/ethermint
       },
       "evidence":{
          "max_age_num_blocks":"100000",
-         "max_age_duration":"172800000000000"
+         "max_age_duration":"172800000000000",
+         "max_bytes":"1048576"
       },
       "validator":{
          "pub_key_types":[
             "ed25519"
          ]
+      },
+      "version":{
+
       }
    },
    "app_hash":"",
    "app_state":{
-      "genutil":{
-         "gentxs":[
+      "auth":{
+         "params":{
+            "max_memo_characters":"256",
+            "tx_sig_limit":"7",
+            "tx_size_cost_per_byte":"10",
+            "sig_verify_cost_ed25519":"590",
+            "sig_verify_cost_secp256k1":"1000"
+         },
+         "accounts":[
             {
-               "type":"cosmos-sdk/StdTx",
-               "value":{
-                  "msg":[
-                     {
-                        "type":"cosmos-sdk/MsgCreateValidator",
-                        "value":{
-                           "description":{
-                              "moniker":"validator-1",
-                              "identity":"",
-                              "website":"",
-                              "security_contact":"",
-                              "details":""
-                           },
-                           "commission":{
-                              "rate":"0.100000000000000000",
-                              "max_rate":"0.200000000000000000",
-                              "max_change_rate":"0.010000000000000000"
-                           },
-                           "min_self_delegation":"1",
-                           "delegator_address":"eth12fkhumzzmdjlph5dcj5hemzqlc663pf5k8md7y",
-                           "validator_address":"ethvaloper12fkhumzzmdjlph5dcj5hemzqlc663pf5g49es6",
-                           "pubkey":"ethvalconspub1zcjduepqxukyn24h2ll0l768s28wtllqkktejhm8d0klzu9y382e36sm0k8sgnfkjz",
-                           "value":{
-                              "denom":"abcx",
-                              "amount":"100000000000000000000000"
-                           }
-                        }
-                     }
-                  ],
-                  "fee":{
-                     "amount":[
-
-                     ],
-                     "gas":"200000"
-                  },
-                  "signatures":[
-                     {
-                        "pub_key":{
-                           "type":"ethermint/PubKeyEthSecp256k1",
-                           "value":"A5ZbQPTCM4L6oSiHsIbUQf0dUguqR4r07DOtXxbtTvUn"
-                        },
-                        "signature":"m7apNOzGpewz9Dt2x/Ipf1ZWcQGVgT1MEGXuqFHdlkgARNSEqBVUH8r12JZpATfZYiyXdVD0/0KYzpMQd/mHDgE="
-                     }
-                  ],
-                  "memo":"784d61aa794ac513cc64b4d98684264975b6a62e@10.12.20.61:26656"
-               }
+               "@type":"/ethermint.types.v1.EthAccount",
+               "base_account":{
+                  "address":"ethm12fkhumzzmdjlph5dcj5hemzqlc663pf5h8ksrk",
+                  "pub_key":null,
+                  "account_number":"0",
+                  "sequence":"0"
+               },
+               "code_hash":"0xc5d2460186f7233c927e7db2dcc703c0e500b653ca82273b7bfad8045d85a470"
             }
          ]
       },
-      "bank":{
-         "send_enabled":true
-      },
-      "gov":{
-         "starting_proposal_id":"1",
-         "deposits":null,
-         "votes":null,
-         "proposals":null,
-         "deposit_params":{
-            "min_deposit":[
-               {
-                  "denom":"abcx",
-                  "amount":"10000000"
-               }
-            ],
-            "max_deposit_period":"172800000000000"
-         },
-         "voting_params":{
-            "voting_period":"172800000000000"
-         },
-         "tally_params":{
-            "quorum":"0.334000000000000000",
-            "threshold":"0.500000000000000000",
-            "veto":"0.334000000000000000"
-         }
-      },
-      "staking":{
-         "params":{
-            "unbonding_time":"1814400000000000",
-            "max_validators":100,
-            "max_entries":7,
-            "historical_entries":0,
-            "bond_denom":"abcx"
-         },
-         "last_total_power":"0",
-         "last_validator_powers":null,
-         "validators":null,
-         "delegations":null,
-         "unbonding_delegations":null,
-         "redelegations":null,
-         "exported":false
-      },
-      "evidence":{
-         "params":{
-            "max_evidence_age":"120000000000"
-         },
-         "evidence":[
+      "authz":{
+         "authorization":[
 
          ]
       },
-      "slashing":{
+      "bank":{
          "params":{
-            "signed_blocks_window":"100",
-            "min_signed_per_window":"0.500000000000000000",
-            "downtime_jail_duration":"600000000000",
-            "slash_fraction_double_sign":"0.050000000000000000",
-            "slash_fraction_downtime":"0.010000000000000000"
-         },
-         "signing_infos":{
+            "send_enabled":[
 
+            ],
+            "default_send_enabled":true
          },
-         "missed_blocks":{
+         "balances":[
+            {
+               "address":"ethm12fkhumzzmdjlph5dcj5hemzqlc663pf5h8ksrk",
+               "coins":[
+                  {
+                     "denom":"abcx",
+                     "amount":"100000000000000000000000000"
+                  }
+               ]
+            }
+         ],
+         "supply":[
+            {
+               "denom":"abcx",
+               "amount":"100000000000000000000000000"
+            }
+         ],
+         "denom_metadata":[
 
-         }
+         ]
       },
-      "upgrade":{
+      "capability":{
+         "index":"1",
+         "owners":[
 
+         ]
+      },
+      "crisis":{
+         "constant_fee":{
+            "denom":"abcx",
+            "amount":"1000"
+         }
       },
       "distribution":{
          "params":{
@@ -220,75 +169,214 @@ cd ~/ethermint
 
          ]
       },
-      "params":null,
-      "crisis":{
-         "constant_fee":{
-            "denom":"abcx",
-            "amount":"1000"
-         }
+      "evidence":{
+         "evidence":[
+
+         ]
       },
       "evm":{
          "accounts":[
 
          ],
-         "txs_logs":[
-
-         ],
-         "chain_config":{
-            "homestead_block":"0",
-            "dao_fork_block":"0",
-            "dao_fork_support":true,
-            "eip150_block":"0",
-            "eip150_hash":"0x0000000000000000000000000000000000000000000000000000000000000000",
-            "eip155_block":"0",
-            "eip158_block":"0",
-            "byzantium_block":"0",
-            "constantinople_block":"0",
-            "petersburg_block":"0",
-            "istanbul_block":"0",
-            "muir_glacier_block":"0",
-            "yoloV2_block":"-1",
-            "ewasm_block":"-1"
-         },
          "params":{
             "evm_denom":"abcx",
             "enable_create":true,
             "enable_call":true,
-            "extra_eips":null
+            "extra_eips":[
+
+            ],
+            "chain_config":{
+               "homestead_block":"0",
+               "dao_fork_block":"0",
+               "dao_fork_support":true,
+               "eip150_block":"0",
+               "eip150_hash":"0x0000000000000000000000000000000000000000000000000000000000000000",
+               "eip155_block":"0",
+               "eip158_block":"0",
+               "byzantium_block":"0",
+               "constantinople_block":"0",
+               "petersburg_block":"0",
+               "istanbul_block":"0",
+               "muir_glacier_block":"0",
+               "berlin_block":"0",
+               "london_block":"0",
+               "arrow_glacier_block":"0",
+               "merge_fork_block":"0"
+            }
          }
       },
-      "supply":{
-         "supply":[
+      "feegrant":{
+         "allowances":[
 
          ]
       },
-      "auth":{
+      "feemarket":{
          "params":{
-            "max_memo_characters":"256",
-            "tx_sig_limit":"7",
-            "tx_size_cost_per_byte":"10",
-            "sig_verify_cost_ed25519":"590",
-            "sig_verify_cost_secp256k1":"1000"
+            "no_base_fee":false,
+            "base_fee_change_denominator":8,
+            "elasticity_multiplier":2,
+            "initial_base_fee":"1000000000",
+            "enable_height":"0"
          },
-         "accounts":[
+         "base_fee":"1000000000",
+         "block_gas":"0"
+      },
+      "genutil":{
+         "gen_txs":[
             {
-               "type":"ethermint/EthAccount",
-               "value":{
-                  "address":"eth12fkhumzzmdjlph5dcj5hemzqlc663pf5k8md7y",
-                  "eth_address":"0x526d7e6c42DB65F0DE8dC4A97cEc40FE35A88534",
-                  "coins":[
+               "body":{
+                  "messages":[
                      {
-                        "denom":"abcx",
-                        "amount":"1000000000000000000000000000"
+                        "@type":"/cosmos.staking.v1beta1.MsgCreateValidator",
+                        "description":{
+                           "moniker":"validator-1",
+                           "identity":"",
+                           "website":"",
+                           "security_contact":"",
+                           "details":""
+                        },
+                        "commission":{
+                           "rate":"0.100000000000000000",
+                           "max_rate":"0.200000000000000000",
+                           "max_change_rate":"0.010000000000000000"
+                        },
+                        "min_self_delegation":"1",
+                        "delegator_address":"ethm12fkhumzzmdjlph5dcj5hemzqlc663pf5h8ksrk",
+                        "validator_address":"ethmvaloper12fkhumzzmdjlph5dcj5hemzqlc663pf5chuumt",
+                        "pubkey":{
+                           "@type":"/cosmos.crypto.ed25519.PubKey",
+                           "key":"kZSNxFsdG8qg8Uiw9C3F1iZoQ73dNNZa/1/1dFXVpyI="
+                        },
+                        "value":{
+                           "denom":"abcx",
+                           "amount":"10000000000000000000000"
+                        }
                      }
                   ],
-                  "public_key":"",
-                  "account_number":0,
-                  "sequence":0,
-                  "code_hash":"c5d2460186f7233c927e7db2dcc703c0e500b653ca82273b7bfad8045d85a470"
-               }
+                  "memo":"ae06daf14b68027c3bc1523fa7545ddb414bd2ad@10.12.20.240:26656",
+                  "timeout_height":"0",
+                  "extension_options":[
+
+                  ],
+                  "non_critical_extension_options":[
+
+                  ]
+               },
+               "auth_info":{
+                  "signer_infos":[
+                     {
+                        "public_key":{
+                           "@type":"/ethermint.crypto.v1.ethsecp256k1.PubKey",
+                           "key":"A5ZbQPTCM4L6oSiHsIbUQf0dUguqR4r07DOtXxbtTvUn"
+                        },
+                        "mode_info":{
+                           "single":{
+                              "mode":"SIGN_MODE_DIRECT"
+                           }
+                        },
+                        "sequence":"0"
+                     }
+                  ],
+                  "fee":{
+                     "amount":[
+
+                     ],
+                     "gas_limit":"200000",
+                     "payer":"",
+                     "granter":""
+                  }
+               },
+               "signatures":[
+                  "B2ueRGwpEB4mUuyyLgdSZ353RVhEJLsSzFQa65EIg8I4hV+WFZhO/Guhek5P/ipQe++iOMO0HuuOfQQnvIGPNgE="
+               ]
             }
          ]
+      },
+      "gov":{
+         "starting_proposal_id":"1",
+         "deposits":[
+
+         ],
+         "votes":[
+
+         ],
+         "proposals":[
+
+         ],
+         "deposit_params":{
+            "min_deposit":[
+               {
+                  "denom":"abcx",
+                  "amount":"10000000"
+               }
+            ],
+            "max_deposit_period":"172800s"
+         },
+         "voting_params":{
+            "voting_period":"172800s"
+         },
+         "tally_params":{
+            "quorum":"0.334000000000000000",
+            "threshold":"0.500000000000000000",
+            "veto_threshold":"0.334000000000000000"
+         }
+      },
+      "ibc":{
+         "client_genesis":{
+            "clients":[
+
+            ],
+            "clients_consensus":[
+
+            ],
+            "clients_metadata":[
+
+            ],
+            "params":{
+               "allowed_clients":[
+                  "06-solomachine",
+                  "07-tendermint"
+               ]
+            },
+            "create_localhost":false,
+            "next_client_sequence":"0"
+         },
+         "connection_genesis":{
+            "connections":[
+
+            ],
+            "client_connection_paths":[
+
+            ],
+            "next_connection_sequence":"0",
+            "params":{
+               "max_expected_time_per_block":"30000000000"
+            }
+         },
+         "channel_genesis":{
+            "channels":[
+
+            ],
+            "acknowledgements":[
+
+            ],
+            "commitments":[
+
+            ],
+            "receipts":[
+
+            ],
+            "send_sequences":[
+
+            ],
+            "recv_sequences":[
+
+            ],
+            "ack_sequences":[
+
+            ],
+            "next_channel_sequence":"0"
+         }
       },
       "mint":{
          "minter":{
@@ -303,6 +391,64 @@ cd ~/ethermint
             "goal_bonded":"0.670000000000000000",
             "blocks_per_year":"6311520"
          }
+      },
+      "params":null,
+      "slashing":{
+         "params":{
+            "signed_blocks_window":"100",
+            "min_signed_per_window":"0.500000000000000000",
+            "downtime_jail_duration":"600s",
+            "slash_fraction_double_sign":"0.050000000000000000",
+            "slash_fraction_downtime":"0.010000000000000000"
+         },
+         "signing_infos":[
+
+         ],
+         "missed_blocks":[
+
+         ]
+      },
+      "staking":{
+         "params":{
+            "unbonding_time":"1814400s",
+            "max_validators":100,
+            "max_entries":7,
+            "historical_entries":10000,
+            "bond_denom":"abcx"
+         },
+         "last_total_power":"0",
+         "last_validator_powers":[
+
+         ],
+         "validators":[
+
+         ],
+         "delegations":[
+
+         ],
+         "unbonding_delegations":[
+
+         ],
+         "redelegations":[
+
+         ],
+         "exported":false
+      },
+      "transfer":{
+         "port_id":"transfer",
+         "denom_traces":[
+
+         ],
+         "params":{
+            "send_enabled":true,
+            "receive_enabled":true
+         }
+      },
+      "upgrade":{
+
+      },
+      "vesting":{
+
       }
    }
 }
@@ -310,29 +456,29 @@ cd ~/ethermint
 
 5. Add the following in seeds, persistent_peers in ~/.blockxd/config/config.toml
 ```
-784d61aa794ac513cc64b4d98684264975b6a62e@52.71.20.235:26656,a94ec9354d7fbe3748e87fcb3c98915f695ce3e3@54.166.134.59:26656
+ae06daf14b68027c3bc1523fa7545ddb414bd2ad@35.170.78.143:26656,8bf553280fdb5b9f67661339de4c8fc24d1e429e@44.199.206.198:26656
 ```
 
 6. Reset the local chain config
 ```bash
-cd ~/BlockX-chain
+cd ~/ethermint
 ./build/blockxd unsafe-reset-all
 ```
 
 7. Start local node and check if its syncing
 ```bash
-./build/blockxd start --pruning=nothing --rpc.unsafe --log_level "main:info,state:info,mempool:info" --trace
+./build/blockxd start --pruning=nothing --evm.tracer=json "--trace" --log_level "info" --json-rpc.api eth,txpool,net,web3 --api.enable
 ```
 
-8. Start RPC (in a different terminal)
+8. Acquire test tokens from the team for the address generated from the mnemonic
+
+9. Add your key to keyring
 ```bash
-./build/blockxcli rest-server --laddr "tcp://0.0.0.0:8545" --chain-id blockx-11 --trace --rpc-api eth,net,web3 --unsafe-cors
+./build/blockxd keys add <> --recover
 ```
-
-9. Acquire test tokens from the team for the address generated from the mnemonic
 
 10. Run create validator command to become a validator in the network after the blockchain syncs completely(change values in commands accordingly).
 Amount should be of the format - <x>abcx
 ```bash
-./build/blockxcli tx staking create-validator --amount=<> --pubkey=$(./build/blockxd tendermint show-validator) --moniker=<> --chain-id=blockx-11 --commission-rate="0.10" --commission-max-rate="0.20" --commission-max-change-rate="0.01" --min-self-delegation="1" --gas="auto" --from=<>
+./build/blockxd tx staking create-validator --amount=<> --pubkey=$(./build/blockxd tendermint show-validator) --moniker=<> --chain-id=blockx_12345-12345 --commission-rate="0.10" --commission-max-rate="0.20" --commission-max-change-rate="0.01" --min-self-delegation="1" --gas="auto" --from=<>
 ```

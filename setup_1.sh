@@ -49,4 +49,4 @@ cat $HOME/.blockxd/config/genesis.json | jq '.app_state["mint"]["params"]["mint_
 ./build/blockxd validate-genesis
 
 # Start the node (remove the --pruning=nothing flag if historical queries are not needed)
-./build/blockxd start --pruning=nothing --evm.tracer=json $TRACE --log_level $LOGLEVEL --minimum-gas-prices=0.0001abcx --json-rpc.api eth,txpool,net,web3 --api.enable
+./build/blockxd start --pruning=nothing --evm.tracer=json $TRACE --log_level $LOGLEVEL --json-rpc.api eth,txpool,net,web3 --api.enable

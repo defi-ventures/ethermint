@@ -27,10 +27,10 @@ import (
 	rpcclient "github.com/tendermint/tendermint/rpc/jsonrpc/client"
 	tmtypes "github.com/tendermint/tendermint/types"
 
-	rpcfilters "github.com/tharsis/ethermint/rpc/ethereum/namespaces/eth/filters"
-	"github.com/tharsis/ethermint/rpc/ethereum/types"
-	"github.com/tharsis/ethermint/server/config"
-	evmtypes "github.com/tharsis/ethermint/x/evm/types"
+	rpcfilters "github.com/defi-ventures/ethermint/rpc/ethereum/namespaces/eth/filters"
+	"github.com/defi-ventures/ethermint/rpc/ethereum/types"
+	"github.com/defi-ventures/ethermint/server/config"
+	evmtypes "github.com/defi-ventures/ethermint/x/evm/types"
 )
 
 type WebsocketsServer interface {
@@ -714,7 +714,7 @@ func (api *pubSubAPI) subscribePendingTransactions(wsConn *wsConn) (rpc.ID, erro
 							try(func() {
 								// Release the initial read lock in .RUnlock() before
 								// invoking .Lock() to avoid the deadlock in
-								// https://github.com/tharsis/ethermint/issues/821#issuecomment-1033959984
+								// https://github.com/defi-ventures/ethermint/issues/821#issuecomment-1033959984
 								// and as documented at https://pkg.go.dev/sync#RWMutex
 								api.filtersMu.RUnlock()
 								api.filtersMu.Lock()

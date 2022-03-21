@@ -7,7 +7,7 @@ import (
 	"github.com/cosmos/cosmos-sdk/types/module"
 	"github.com/cosmos/cosmos-sdk/x/auth/tx"
 
-	enccodec "github.com/tharsis/ethermint/encoding/codec"
+	enccodec "github.com/defi-ventures/ethermint/encoding/codec"
 )
 
 // MakeConfig creates an EncodingConfig for testing

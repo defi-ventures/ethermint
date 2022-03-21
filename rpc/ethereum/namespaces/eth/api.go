@@ -31,11 +31,11 @@ import (
 	ethtypes "github.com/ethereum/go-ethereum/core/types"
 	"github.com/ethereum/go-ethereum/crypto"
 
-	"github.com/tharsis/ethermint/crypto/hd"
-	"github.com/tharsis/ethermint/rpc/ethereum/backend"
-	rpctypes "github.com/tharsis/ethermint/rpc/ethereum/types"
-	ethermint "github.com/tharsis/ethermint/types"
-	evmtypes "github.com/tharsis/ethermint/x/evm/types"
+	"github.com/defi-ventures/ethermint/crypto/hd"
+	"github.com/defi-ventures/ethermint/rpc/ethereum/backend"
+	rpctypes "github.com/defi-ventures/ethermint/rpc/ethereum/types"
+	ethermint "github.com/defi-ventures/ethermint/types"
+	evmtypes "github.com/defi-ventures/ethermint/x/evm/types"
 )
 
 // PublicAPI is the eth_ prefixed set of APIs in the Web3 JSON-RPC spec.
@@ -528,7 +528,7 @@ func checkTxFee(gasPrice *big.Int, gas uint64, cap float64) error {
 		return nil
 	}
 	totalfee := new(big.Float).SetInt(new(big.Int).Mul(gasPrice, new(big.Int).SetUint64(gas)))
-	// 1 photon in 10^18 aphoton
+	// 1 bcx in 10^18 abcx
 	oneToken := new(big.Float).SetInt(big.NewInt(params.Ether))
 	// quo = rounded(x/y)
 	feeEth := new(big.Float).Quo(totalfee, oneToken)
@@ -574,7 +574,7 @@ func (e *PublicAPI) Resend(ctx context.Context, args evmtypes.TransactionArgs, g
 	}
 
 	for _, tx := range pending {
-		// FIXME does Resend api possible at all?  https://github.com/tharsis/ethermint/issues/905
+		// FIXME does Resend api possible at all?  https://github.com/defi-ventures/ethermint/issues/905
 		p, err := evmtypes.UnwrapEthereumMsg(tx, common.Hash{})
 		if err != nil {
 			// not valid ethereum tx

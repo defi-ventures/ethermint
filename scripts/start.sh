@@ -18,7 +18,7 @@ KEY="mykey"
 CHAINID="ethermint_9000-1"
 MONIKER="mymoniker"
 
-## default port prefixes for ethermintd
+## default port prefixes for blockxd
 NODE_P2P_PORT="2660"
 NODE_PORT="2663"
 NODE_RPC_PORT="2666"
@@ -73,29 +73,29 @@ arrcli=()
 
 init_func() {
     echo "create and add new keys"
-    "$PWD"/build/ethermintd keys add $KEY"$i" --home "$DATA_DIR$i" --no-backup --chain-id $CHAINID --algo "eth_secp256k1" --keyring-backend test
+    "$PWD"/build/blockxd keys add $KEY"$i" --home "$DATA_DIR$i" --no-backup --chain-id $CHAINID --algo "eth_secp256k1" --keyring-backend test
     echo "init Ethermint with moniker=$MONIKER and chain-id=$CHAINID"
-    "$PWD"/build/ethermintd init $MONIKER --chain-id $CHAINID --home "$DATA_DIR$i"
+    "$PWD"/build/blockxd init $MONIKER --chain-id $CHAINID --home "$DATA_DIR$i"
     echo "prepare genesis: Allocate genesis accounts"
-    "$PWD"/build/ethermintd add-genesis-account \
-    "$("$PWD"/build/ethermintd keys show "$KEY$i" -a --home "$DATA_DIR$i" --keyring-backend test)" 1000000000000000000aphoton,1000000000000000000stake \
+    "$PWD"/build/blockxd add-genesis-account \
+    "$("$PWD"/build/blockxd keys show "$KEY$i" -a --home "$DATA_DIR$i" --keyring-backend test)" 1000000000000000000abcx,1000000000000000000stake \
     --home "$DATA_DIR$i" --keyring-backend test
     echo "prepare genesis: Sign genesis transaction"
-    "$PWD"/build/ethermintd gentx $KEY"$i" 1000000000000000000stake --keyring-backend test --home "$DATA_DIR$i" --keyring-backend test --chain-id $CHAINID
+    "$PWD"/build/blockxd gentx $KEY"$i" 1000000000000000000stake --keyring-backend test --home "$DATA_DIR$i" --keyring-backend test --chain-id $CHAINID
     echo "prepare genesis: Collect genesis tx"
-    "$PWD"/build/ethermintd collect-gentxs --home "$DATA_DIR$i"
+    "$PWD"/build/blockxd collect-gentxs --home "$DATA_DIR$i"
     echo "prepare genesis: Run validate-genesis to ensure everything worked and that the genesis file is setup correctly"
-    "$PWD"/build/ethermintd validate-genesis --home "$DATA_DIR$i"
+    "$PWD"/build/blockxd validate-genesis --home "$DATA_DIR$i"
 }
 
 start_func() {
     echo "starting ethermint node $i in background ..."
-    "$PWD"/build/ethermintd start --pruning=nothing --rpc.unsafe \
+    "$PWD"/build/blockxd start --pruning=nothing --rpc.unsafe \
     --p2p.laddr tcp://$IP_ADDR:$NODE_P2P_PORT"$i" --address tcp://$IP_ADDR:$NODE_PORT"$i" --rpc.laddr tcp://$IP_ADDR:$NODE_RPC_PORT"$i" \
     --json-rpc.address=$IP_ADDR:$RPC_PORT"$i" \
     --keyring-backend test --home "$DATA_DIR$i" \
     >"$DATA_DIR"/node"$i".log 2>&1 & disown
-    
+
     ETHERMINT_PID=$!
     echo "started ethermint node, pid=$ETHERMINT_PID"
     # add PID to array
@@ -120,7 +120,7 @@ echo "done sleeping"
 set +e
 
 if [[ -z $TEST || $TEST == "rpc" ]]; then
-    
+
     for i in $(seq 1 "$TEST_QTD"); do
         HOST_RPC=http://$IP_ADDR:$RPC_PORT"$i"
         echo "going to test ethermint node $HOST_RPC ..."
@@ -129,13 +129,13 @@ if [[ -z $TEST || $TEST == "rpc" ]]; then
 
         TEST_FAIL=$?
     done
-    
+
 fi
 
 stop_func() {
     ETHERMINT_PID=$i
     echo "shutting down node, pid=$ETHERMINT_PID ..."
-    
+
     # Shutdown ethermint node
     kill -9 "$ETHERMINT_PID"
     wait "$ETHERMINT_PID"

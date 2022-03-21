@@ -5,12 +5,12 @@ import (
 
 	sdk "github.com/cosmos/cosmos-sdk/types"
 	tx "github.com/cosmos/cosmos-sdk/types/tx"
+	"github.com/defi-ventures/ethermint/x/evm/statedb"
+	evmtypes "github.com/defi-ventures/ethermint/x/evm/types"
 	"github.com/ethereum/go-ethereum/common"
 	"github.com/ethereum/go-ethereum/core"
 	"github.com/ethereum/go-ethereum/core/vm"
 	"github.com/ethereum/go-ethereum/params"
-	"github.com/tharsis/ethermint/x/evm/statedb"
-	evmtypes "github.com/tharsis/ethermint/x/evm/types"
 )
 
 // EVMKeeper defines the expected keeper interface used on the Eth AnteHandler

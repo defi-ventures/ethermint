@@ -30,15 +30,15 @@ import (
 	"github.com/cosmos/cosmos-sdk/x/crisis"
 	genutilcli "github.com/cosmos/cosmos-sdk/x/genutil/client/cli"
 
-	"github.com/tharsis/ethermint/app"
-	ethermintclient "github.com/tharsis/ethermint/client"
-	"github.com/tharsis/ethermint/client/debug"
-	"github.com/tharsis/ethermint/crypto/hd"
-	"github.com/tharsis/ethermint/encoding"
-	"github.com/tharsis/ethermint/server"
-	servercfg "github.com/tharsis/ethermint/server/config"
-	srvflags "github.com/tharsis/ethermint/server/flags"
-	ethermint "github.com/tharsis/ethermint/types"
+	"github.com/defi-ventures/ethermint/app"
+	ethermintclient "github.com/defi-ventures/ethermint/client"
+	"github.com/defi-ventures/ethermint/client/debug"
+	"github.com/defi-ventures/ethermint/crypto/hd"
+	"github.com/defi-ventures/ethermint/encoding"
+	"github.com/defi-ventures/ethermint/server"
+	servercfg "github.com/defi-ventures/ethermint/server/config"
+	srvflags "github.com/defi-ventures/ethermint/server/flags"
+	ethermint "github.com/defi-ventures/ethermint/types"
 )
 
 const EnvPrefix = "ETHERMINT"
@@ -60,7 +60,7 @@ func NewRootCmd() (*cobra.Command, params.EncodingConfig) {
 		WithViper(EnvPrefix)
 
 	rootCmd := &cobra.Command{
-		Use:   "ethermintd",
+		Use:   "blockxd",
 		Short: "Ethermint Daemon",
 		PersistentPreRunE: func(cmd *cobra.Command, _ []string) error {
 			// set the default command outputs
@@ -81,8 +81,8 @@ func NewRootCmd() (*cobra.Command, params.EncodingConfig) {
 				return err
 			}
 
-			// FIXME: replace AttoPhoton with bond denom
-			customAppTemplate, customAppConfig := servercfg.AppConfig(ethermint.AttoPhoton)
+			// FIXME: replace AttoBcx with bond denom
+			customAppTemplate, customAppConfig := servercfg.AppConfig(ethermint.AttoBcx)
 
 			return sdkserver.InterceptConfigsPreRunHandler(cmd, customAppTemplate, customAppConfig)
 		},

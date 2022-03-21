@@ -48,13 +48,13 @@ import (
 	"github.com/cosmos/cosmos-sdk/x/genutil"
 	stakingtypes "github.com/cosmos/cosmos-sdk/x/staking/types"
 
-	"github.com/tharsis/ethermint/crypto/hd"
-	"github.com/tharsis/ethermint/encoding"
-	"github.com/tharsis/ethermint/server/config"
-	ethermint "github.com/tharsis/ethermint/types"
-	evmtypes "github.com/tharsis/ethermint/x/evm/types"
+	"github.com/defi-ventures/ethermint/crypto/hd"
+	"github.com/defi-ventures/ethermint/encoding"
+	"github.com/defi-ventures/ethermint/server/config"
+	ethermint "github.com/defi-ventures/ethermint/types"
+	evmtypes "github.com/defi-ventures/ethermint/x/evm/types"
 
-	"github.com/tharsis/ethermint/app"
+	"github.com/defi-ventures/ethermint/app"
 )
 
 // package-wide network lock to only allow one test network at a time
@@ -123,8 +123,8 @@ func DefaultConfig() Config {
 		TimeoutCommit:     2 * time.Second,
 		ChainID:           fmt.Sprintf("ethermint_%d-1", tmrand.Int63n(9999999999999)+1),
 		NumValidators:     4,
-		BondDenom:         ethermint.AttoPhoton,
-		MinGasPrices:      fmt.Sprintf("0.000006%s", ethermint.AttoPhoton),
+		BondDenom:         ethermint.AttoBcx,
+		MinGasPrices:      fmt.Sprintf("0.000006%s", ethermint.AttoBcx),
 		AccountTokens:     sdk.TokensFromConsensusPower(1000, ethermint.PowerReduction),
 		StakingTokens:     sdk.TokensFromConsensusPower(500, ethermint.PowerReduction),
 		BondedTokens:      sdk.TokensFromConsensusPower(100, ethermint.PowerReduction),
@@ -469,7 +469,7 @@ func New(l Logger, baseDir string, cfg Config) (*Network, error) {
 			return nil, err
 		}
 
-		customAppTemplate, _ := config.AppConfig(ethermint.AttoPhoton)
+		customAppTemplate, _ := config.AppConfig(ethermint.AttoBcx)
 		srvconfig.SetConfigTemplate(customAppTemplate)
 		srvconfig.WriteConfigFile(filepath.Join(nodeDir, "config/app.toml"), appCfg)
 

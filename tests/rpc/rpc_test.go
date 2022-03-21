@@ -1,7 +1,7 @@
 // This is a test utility for Ethermint's Web3 JSON-RPC services.
 //
-// To run these tests please first ensure you have the ethermintd running
-// and have started the RPC service with `ethermintd rest-server`.
+// To run these tests please first ensure you have the blockxd running
+// and have started the RPC service with `blockxd rest-server`.
 //
 // You can configure the desired HOST and MODE as well
 package rpc
@@ -17,9 +17,9 @@ import (
 
 	"github.com/stretchr/testify/require"
 
-	rpctypes "github.com/tharsis/ethermint/rpc/ethereum/types"
-	ethermint "github.com/tharsis/ethermint/types"
-	evmtypes "github.com/tharsis/ethermint/x/evm/types"
+	rpctypes "github.com/defi-ventures/ethermint/rpc/ethereum/types"
+	ethermint "github.com/defi-ventures/ethermint/types"
+	evmtypes "github.com/defi-ventures/ethermint/x/evm/types"
 
 	"github.com/ethereum/go-ethereum/common"
 	"github.com/ethereum/go-ethereum/common/hexutil"

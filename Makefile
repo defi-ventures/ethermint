@@ -7,11 +7,11 @@ TMVERSION := $(shell go list -m github.com/tendermint/tendermint | sed 's:.* ::'
 COMMIT := $(shell git log -1 --format='%H')
 LEDGER_ENABLED ?= true
 BINDIR ?= $(GOPATH)/bin
-ETHERMINT_BINARY = ethermintd
+ETHERMINT_BINARY = blockxd
 ETHERMINT_DIR = ethermint
 BUILDDIR ?= $(CURDIR)/build
 SIMAPP = ./app
-HTTPS_GIT := https://github.com/tharsis/ethermint.git
+HTTPS_GIT := https://github.com/defi-ventures/ethermint.git
 DOCKER := $(shell which docker)
 DOCKER_BUF := $(DOCKER) run --rm -v $(CURDIR):/workspace --workdir /workspace bufbuild/buf
 
@@ -126,10 +126,10 @@ docker-build:
 	# update old container
 	docker rm ethermint || true
 	# create a new container from the latest image
-	docker create --name ethermint -t -i tharsis/ethermint:latest ethermint
+	docker create --name ethermint -t -i defi-ventures/ethermint:latest ethermint
 	# move the binaries to the ./build directory
 	mkdir -p ./build/
-	docker cp ethermint:/usr/bin/ethermintd ./build/
+	docker cp ethermint:/usr/bin/blockxd ./build/
 
 $(MOCKS_DIR):
 	mkdir -p $(MOCKS_DIR)
@@ -152,7 +152,7 @@ build-all: tools build lint test
 ###                                Releasing                                ###
 ###############################################################################
 
-PACKAGE_NAME:=github.com/tharsis/ethermint
+PACKAGE_NAME:=github.com/defi-ventures/ethermint
 GOLANG_CROSS_VERSION  = v1.17.1
 GOPATH ?= '$(HOME)/go'
 release-dry-run:
@@ -285,7 +285,7 @@ update-swagger-docs: statik
 .PHONY: update-swagger-docs
 
 godocs:
-	@echo "--> Wait a few seconds and visit http://localhost:6060/pkg/github.com/tharsis/ethermint/types"
+	@echo "--> Wait a few seconds and visit http://localhost:6060/pkg/github.com/defi-ventures/ethermint/types"
 	godoc -http=:6060
 
 ###############################################################################
@@ -319,7 +319,7 @@ else
 endif
 
 test-import:
-	go test -run TestImporterTestSuite -v --vet=off github.com/tharsis/ethermint/tests/importer
+	go test -run TestImporterTestSuite -v --vet=off github.com/defi-ventures/ethermint/tests/importer
 
 test-rpc:
 	./scripts/integration-test-all.sh -t "rpc" -q 1 -z 1 -s 2 -m "rpc" -r "true"
@@ -494,13 +494,13 @@ ifeq ($(OS),Windows_NT)
 	mkdir localnet-setup &
 	@$(MAKE) localnet-build
 
-	IF not exist "build/node0/$(ETHERMINT_BINARY)/config/genesis.json" docker run --rm -v $(CURDIR)/build\ethermint\Z ethermintd/node "./ethermintd testnet --v 4 -o /ethermint --keyring-backend=test --ip-addresses ethermintdnode0,ethermintdnode1,ethermintdnode2,ethermintdnode3"
+	IF not exist "build/node0/$(ETHERMINT_BINARY)/config/genesis.json" docker run --rm -v $(CURDIR)/build\ethermint\Z blockxd/node "./blockxd testnet --v 4 -o /ethermint --keyring-backend=test --ip-addresses blockxdnode0,blockxdnode1,blockxdnode2,blockxdnode3"
 	docker-compose up -d
 else
 	mkdir -p localnet-setup
 	@$(MAKE) localnet-build
 
-	if ! [ -f localnet-setup/node0/$(ETHERMINT_BINARY)/config/genesis.json ]; then docker run --rm -v $(CURDIR)/localnet-setup:/ethermint:Z ethermintd/node "./ethermintd testnet --v 4 -o /ethermint --keyring-backend=test --ip-addresses ethermintdnode0,ethermintdnode1,ethermintdnode2,ethermintdnode3"; fi
+	if ! [ -f localnet-setup/node0/$(ETHERMINT_BINARY)/config/genesis.json ]; then docker run --rm -v $(CURDIR)/localnet-setup:/ethermint:Z blockxd/node "./blockxd testnet --v 4 -o /ethermint --keyring-backend=test --ip-addresses blockxdnode0,blockxdnode1,blockxdnode2,blockxdnode3"; fi
 	docker-compose up -d
 endif
 
@@ -517,15 +517,15 @@ localnet-clean:
 localnet-unsafe-reset:
 	docker-compose down
 ifeq ($(OS),Windows_NT)
-	@docker run --rm -v $(CURDIR)\localnet-setup\node0\ethermitd:ethermint\Z ethermintd/node "./ethermintd unsafe-reset-all --home=/ethermint"
-	@docker run --rm -v $(CURDIR)\localnet-setup\node1\ethermitd:ethermint\Z ethermintd/node "./ethermintd unsafe-reset-all --home=/ethermint"
-	@docker run --rm -v $(CURDIR)\localnet-setup\node2\ethermitd:ethermint\Z ethermintd/node "./ethermintd unsafe-reset-all --home=/ethermint"
-	@docker run --rm -v $(CURDIR)\localnet-setup\node3\ethermitd:ethermint\Z ethermintd/node "./ethermintd unsafe-reset-all --home=/ethermint"
+	@docker run --rm -v $(CURDIR)\localnet-setup\node0\ethermitd:ethermint\Z blockxd/node "./blockxd unsafe-reset-all --home=/ethermint"
+	@docker run --rm -v $(CURDIR)\localnet-setup\node1\ethermitd:ethermint\Z blockxd/node "./blockxd unsafe-reset-all --home=/ethermint"
+	@docker run --rm -v $(CURDIR)\localnet-setup\node2\ethermitd:ethermint\Z blockxd/node "./blockxd unsafe-reset-all --home=/ethermint"
+	@docker run --rm -v $(CURDIR)\localnet-setup\node3\ethermitd:ethermint\Z blockxd/node "./blockxd unsafe-reset-all --home=/ethermint"
 else
-	@docker run --rm -v $(CURDIR)/localnet-setup/node0/ethermitd:/ethermint:Z ethermintd/node "./ethermintd unsafe-reset-all --home=/ethermint"
-	@docker run --rm -v $(CURDIR)/localnet-setup/node1/ethermitd:/ethermint:Z ethermintd/node "./ethermintd unsafe-reset-all --home=/ethermint"
-	@docker run --rm -v $(CURDIR)/localnet-setup/node2/ethermitd:/ethermint:Z ethermintd/node "./ethermintd unsafe-reset-all --home=/ethermint"
-	@docker run --rm -v $(CURDIR)/localnet-setup/node3/ethermitd:/ethermint:Z ethermintd/node "./ethermintd unsafe-reset-all --home=/ethermint"
+	@docker run --rm -v $(CURDIR)/localnet-setup/node0/ethermitd:/ethermint:Z blockxd/node "./blockxd unsafe-reset-all --home=/ethermint"
+	@docker run --rm -v $(CURDIR)/localnet-setup/node1/ethermitd:/ethermint:Z blockxd/node "./blockxd unsafe-reset-all --home=/ethermint"
+	@docker run --rm -v $(CURDIR)/localnet-setup/node2/ethermitd:/ethermint:Z blockxd/node "./blockxd unsafe-reset-all --home=/ethermint"
+	@docker run --rm -v $(CURDIR)/localnet-setup/node3/ethermitd:/ethermint:Z blockxd/node "./blockxd unsafe-reset-all --home=/ethermint"
 endif
 
 # Clean testnet

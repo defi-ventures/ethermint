@@ -22,13 +22,13 @@ import (
 	authtx "github.com/cosmos/cosmos-sdk/x/auth/tx"
 	authtypes "github.com/cosmos/cosmos-sdk/x/auth/types"
 
-	"github.com/tharsis/ethermint/app"
-	ante "github.com/tharsis/ethermint/app/ante"
-	"github.com/tharsis/ethermint/encoding"
-	"github.com/tharsis/ethermint/tests"
-	"github.com/tharsis/ethermint/x/evm/statedb"
-	evmtypes "github.com/tharsis/ethermint/x/evm/types"
-	feemarkettypes "github.com/tharsis/ethermint/x/feemarket/types"
+	"github.com/defi-ventures/ethermint/app"
+	ante "github.com/defi-ventures/ethermint/app/ante"
+	"github.com/defi-ventures/ethermint/encoding"
+	"github.com/defi-ventures/ethermint/tests"
+	"github.com/defi-ventures/ethermint/x/evm/statedb"
+	evmtypes "github.com/defi-ventures/ethermint/x/evm/types"
+	feemarkettypes "github.com/defi-ventures/ethermint/x/feemarket/types"
 
 	tmproto "github.com/tendermint/tendermint/proto/tendermint/types"
 )

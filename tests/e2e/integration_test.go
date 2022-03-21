@@ -8,7 +8,7 @@ import (
 	"testing"
 
 	sdk "github.com/cosmos/cosmos-sdk/types"
-	evmtypes "github.com/tharsis/ethermint/x/evm/types"
+	evmtypes "github.com/defi-ventures/ethermint/x/evm/types"
 
 	// . "github.com/onsi/ginkgo"
 	// . "github.com/onsi/gomega"
@@ -23,9 +23,9 @@ import (
 	"github.com/ethereum/go-ethereum/ethclient/gethclient"
 	"github.com/ethereum/go-ethereum/rpc"
 
-	"github.com/tharsis/ethermint/server/config"
-	"github.com/tharsis/ethermint/testutil/network"
-	ethermint "github.com/tharsis/ethermint/types"
+	"github.com/defi-ventures/ethermint/server/config"
+	"github.com/defi-ventures/ethermint/testutil/network"
+	ethermint "github.com/defi-ventures/ethermint/types"
 )
 
 // var _ = Describe("E2e", func() {

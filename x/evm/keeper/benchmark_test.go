@@ -10,16 +10,16 @@ import (
 	authante "github.com/cosmos/cosmos-sdk/x/auth/ante"
 	"github.com/ethereum/go-ethereum/common"
 
+	ethermint "github.com/defi-ventures/ethermint/types"
+	"github.com/defi-ventures/ethermint/x/evm/types"
 	ethtypes "github.com/ethereum/go-ethereum/core/types"
-	ethermint "github.com/tharsis/ethermint/types"
-	"github.com/tharsis/ethermint/x/evm/types"
 )
 
 func SetupContract(b *testing.B) (*KeeperTestSuite, common.Address) {
 	suite := KeeperTestSuite{}
 	suite.DoSetupTest(b)
 
-	amt := sdk.Coins{ethermint.NewPhotonCoinInt64(1000000000000000000)}
+	amt := sdk.Coins{ethermint.NewBcxCoinInt64(1000000000000000000)}
 	err := suite.app.BankKeeper.MintCoins(suite.ctx, types.ModuleName, amt)
 	require.NoError(b, err)
 	err = suite.app.BankKeeper.SendCoinsFromModuleToAccount(suite.ctx, types.ModuleName, suite.address.Bytes(), amt)
@@ -35,7 +35,7 @@ func SetupTestMessageCall(b *testing.B) (*KeeperTestSuite, common.Address) {
 	suite := KeeperTestSuite{}
 	suite.DoSetupTest(b)
 
-	amt := sdk.Coins{ethermint.NewPhotonCoinInt64(1000000000000000000)}
+	amt := sdk.Coins{ethermint.NewBcxCoinInt64(1000000000000000000)}
 	err := suite.app.BankKeeper.MintCoins(suite.ctx, types.ModuleName, amt)
 	require.NoError(b, err)
 	err = suite.app.BankKeeper.SendCoinsFromModuleToAccount(suite.ctx, types.ModuleName, suite.address.Bytes(), amt)

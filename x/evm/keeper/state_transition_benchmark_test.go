@@ -7,12 +7,12 @@ import (
 
 	"github.com/cosmos/cosmos-sdk/crypto/keyring"
 	sdk "github.com/cosmos/cosmos-sdk/types"
+	evmtypes "github.com/defi-ventures/ethermint/x/evm/types"
 	"github.com/ethereum/go-ethereum/common"
 	"github.com/ethereum/go-ethereum/core"
 	ethtypes "github.com/ethereum/go-ethereum/core/types"
 	"github.com/ethereum/go-ethereum/params"
 	"github.com/stretchr/testify/require"
-	evmtypes "github.com/tharsis/ethermint/x/evm/types"
 )
 
 var templateAccessListTx = &ethtypes.AccessListTx{

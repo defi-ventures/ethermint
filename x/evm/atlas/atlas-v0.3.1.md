@@ -10,10 +10,10 @@ The `x/evm` module is responsible for executing Ethereum Virtual Machine (EVM) s
    import (
       "github.com/cosmos/cosmos-sdk/x/auth"
       "github.com/cosmos/cosmos-sdk/x/bank"
-       
-      "github.com/tharsis/ethermint/app/ante"
-      ethermint "github.com/tharsis/ethermint/types"
-      "github.com/tharsis/ethermint/x/evm"
+
+      "github.com/defi-ventures/ethermint/app/ante"
+      ethermint "github.com/defi-ventures/ethermint/types"
+      "github.com/defi-ventures/ethermint/x/evm"
    )
    ```
 

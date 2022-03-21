@@ -14,7 +14,7 @@ import (
 	"github.com/cosmos/cosmos-sdk/simapp"
 	authtypes "github.com/cosmos/cosmos-sdk/x/auth/types"
 	banktypes "github.com/cosmos/cosmos-sdk/x/bank/types"
-	feemarkettypes "github.com/tharsis/ethermint/x/feemarket/types"
+	feemarkettypes "github.com/defi-ventures/ethermint/x/feemarket/types"
 
 	stakingtypes "github.com/cosmos/cosmos-sdk/x/staking/types"
 	"github.com/ethereum/go-ethereum/common"
@@ -28,13 +28,13 @@ import (
 	"github.com/cosmos/cosmos-sdk/crypto/keyring"
 	sdk "github.com/cosmos/cosmos-sdk/types"
 
-	"github.com/tharsis/ethermint/app"
-	"github.com/tharsis/ethermint/crypto/ethsecp256k1"
-	"github.com/tharsis/ethermint/tests"
-	ethermint "github.com/tharsis/ethermint/types"
-	"github.com/tharsis/ethermint/x/evm"
-	"github.com/tharsis/ethermint/x/evm/statedb"
-	"github.com/tharsis/ethermint/x/evm/types"
+	"github.com/defi-ventures/ethermint/app"
+	"github.com/defi-ventures/ethermint/crypto/ethsecp256k1"
+	"github.com/defi-ventures/ethermint/tests"
+	ethermint "github.com/defi-ventures/ethermint/types"
+	"github.com/defi-ventures/ethermint/x/evm"
+	"github.com/defi-ventures/ethermint/x/evm/statedb"
+	"github.com/defi-ventures/ethermint/x/evm/types"
 
 	"github.com/tendermint/tendermint/crypto/tmhash"
 	tmproto "github.com/tendermint/tendermint/proto/tendermint/types"
@@ -590,7 +590,7 @@ func (suite *EvmTestSuite) TestERC20TransferReverted() {
 
 			txData, err := types.UnpackTxData(tx.Data)
 			suite.Require().NoError(err)
-			_, err = k.DeductTxCostsFromUserBalance(suite.ctx, *tx, txData, "aphoton", true, true, true)
+			_, err = k.DeductTxCostsFromUserBalance(suite.ctx, *tx, txData, "abcx", true, true, true)
 			suite.Require().NoError(err)
 
 			res, err := k.EthereumTx(sdk.WrapSDKContext(suite.ctx), tx)

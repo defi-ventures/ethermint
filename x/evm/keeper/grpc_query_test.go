@@ -5,18 +5,18 @@ import (
 	"fmt"
 	"math/big"
 
+	"github.com/defi-ventures/ethermint/x/evm/statedb"
 	"github.com/ethereum/go-ethereum/common"
 	"github.com/ethereum/go-ethereum/common/hexutil"
 	"github.com/ethereum/go-ethereum/core/vm"
 	"github.com/ethereum/go-ethereum/crypto"
-	"github.com/tharsis/ethermint/x/evm/statedb"
 
 	sdk "github.com/cosmos/cosmos-sdk/types"
 
-	"github.com/tharsis/ethermint/crypto/ethsecp256k1"
-	"github.com/tharsis/ethermint/server/config"
-	ethermint "github.com/tharsis/ethermint/types"
-	"github.com/tharsis/ethermint/x/evm/types"
+	"github.com/defi-ventures/ethermint/crypto/ethsecp256k1"
+	"github.com/defi-ventures/ethermint/server/config"
+	ethermint "github.com/defi-ventures/ethermint/types"
+	"github.com/defi-ventures/ethermint/x/evm/types"
 )
 
 // Not valid Ethereum address
@@ -50,7 +50,7 @@ func (suite *KeeperTestSuite) TestQueryAccount() {
 		{
 			"success",
 			func() {
-				amt := sdk.Coins{ethermint.NewPhotonCoinInt64(100)}
+				amt := sdk.Coins{ethermint.NewBcxCoinInt64(100)}
 				err := suite.app.BankKeeper.MintCoins(suite.ctx, types.ModuleName, amt)
 				suite.Require().NoError(err)
 				err = suite.app.BankKeeper.SendCoinsFromModuleToAccount(suite.ctx, types.ModuleName, suite.address.Bytes(), amt)
@@ -191,7 +191,7 @@ func (suite *KeeperTestSuite) TestQueryBalance() {
 		{
 			"success",
 			func() {
-				amt := sdk.Coins{ethermint.NewPhotonCoinInt64(100)}
+				amt := sdk.Coins{ethermint.NewBcxCoinInt64(100)}
 				err := suite.app.BankKeeper.MintCoins(suite.ctx, types.ModuleName, amt)
 				suite.Require().NoError(err)
 				err = suite.app.BankKeeper.SendCoinsFromModuleToAccount(suite.ctx, types.ModuleName, suite.address.Bytes(), amt)

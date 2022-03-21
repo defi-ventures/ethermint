@@ -6,10 +6,10 @@ import (
 	"github.com/ethereum/go-ethereum/common"
 
 	authtypes "github.com/cosmos/cosmos-sdk/x/auth/types"
-	"github.com/tharsis/ethermint/crypto/ethsecp256k1"
-	"github.com/tharsis/ethermint/x/evm"
-	"github.com/tharsis/ethermint/x/evm/statedb"
-	"github.com/tharsis/ethermint/x/evm/types"
+	"github.com/defi-ventures/ethermint/crypto/ethsecp256k1"
+	"github.com/defi-ventures/ethermint/x/evm"
+	"github.com/defi-ventures/ethermint/x/evm/statedb"
+	"github.com/defi-ventures/ethermint/x/evm/types"
 )
 
 func (suite *EvmTestSuite) TestInitGenesis() {

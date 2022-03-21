@@ -14,9 +14,9 @@ import (
 	abci "github.com/tendermint/tendermint/abci/types"
 	"github.com/tendermint/tendermint/libs/log"
 
+	"github.com/defi-ventures/ethermint/rpc/ethereum/types"
+	evmtypes "github.com/defi-ventures/ethermint/x/evm/types"
 	"github.com/ethereum/go-ethereum/common/hexutil"
-	"github.com/tharsis/ethermint/rpc/ethereum/types"
-	evmtypes "github.com/tharsis/ethermint/x/evm/types"
 )
 
 // SetTxDefaults populates tx message with default values in case they are not

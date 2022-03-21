@@ -13,7 +13,7 @@ protoc_gen_gocosmos() {
 
 protoc_gen_doc() {
   go get -u github.com/pseudomuto/protoc-gen-doc/cmd/protoc-gen-doc 2>/dev/null
-} 
+}
 
 protoc_gen_gocosmos
 protoc_gen_doc
@@ -40,5 +40,5 @@ $(find "$(pwd)/proto" -maxdepth 5 -name '*.proto')
 # go mod tidy
 
 # move proto files to the right places
-cp -r github.com/tharsis/ethermint/* ./
+cp -r github.com/defi-ventures/ethermint/* ./
 rm -rf github.com

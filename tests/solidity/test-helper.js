@@ -17,7 +17,7 @@ function panic(errMsg) {
 }
 
 function checkTestEnv() {
-  
+
   const argv = yargs(hideBin(process.argv))
     .usage('Usage: $0 [options] <tests>')
     .example('$0 --network ethermint', 'run all tests using ethermint network')
@@ -26,14 +26,14 @@ function checkTestEnv() {
     .describe('network', 'set which network to use: ganache|ethermint')
     .describe('batch', 'set the test batch in parallelized testing. Format: %d-%d')
     .describe('allowTests', 'only run specified tests. Separated by comma.')
-    .boolean('verbose-log').describe('verbose-log', 'print ethermintd output, default false')
+    .boolean('verbose-log').describe('verbose-log', 'print blockxd output, default false')
     .argv;
 
   if (!fs.existsSync(path.join(__dirname, './node_modules'))) {
     panic('node_modules not existed. Please run `yarn install` before running tests.');
   }
   const runConfig = {};
-  
+
   // Check test network
   if (!argv.network) {
     runConfig.network = 'ganache';
@@ -55,15 +55,15 @@ function checkTestEnv() {
     if (!toRunBatch || !allBatches) {
       panic('bad batch input format');
     }
-    
+
     if (toRunBatch > allBatches) {
       panic('test batch number is larger than batch counts');
     }
-    
+
     if (toRunBatch <= 0 || allBatches <=0 ) {
       panic('test batch number or batch counts must be non-zero values');
     }
-    
+
     runConfig.batch = {};
     runConfig.batch.this = toRunBatch;
     runConfig.batch.all = allBatches;
@@ -137,10 +137,10 @@ function performTestSuite({ testName, network }) {
     const testProc = spawn('yarn', [cmd], {
       cwd: path.join(__dirname, 'suites', testName)
     });
-  
+
     testProc.stdout.pipe(process.stdout);
     testProc.stderr.pipe(process.stderr);
-  
+
     testProc.on('close', code => {
       if (code === 0) {
         console.log("end");
@@ -176,29 +176,29 @@ function setupNetwork({ runConfig, timeout }) {
   // Spawn the ethermint process
 
   const spawnPromise = new Promise((resolve, reject) => {
-    const ethermintdProc = spawn('./init-test-node.sh', {
+    const blockxdProc = spawn('./init-test-node.sh', {
       cwd: __dirname,
       stdio: ['ignore', runConfig.verboseLog ? 'pipe' : 'ignore', 'pipe'],
     });
 
     logger.info(`Starting Ethermintd process... timeout: ${timeout}ms`);
     if (runConfig.verboseLog) {
-      ethermintdProc.stdout.pipe(process.stdout);
+      blockxdProc.stdout.pipe(process.stdout);
     }
-    ethermintdProc.stderr.on('data', d => {
+    blockxdProc.stderr.on('data', d => {
       const oLine = d.toString();
       if (runConfig.verboseLog) {
         process.stdout.write(oLine);
       }
       if (oLine.indexOf('Starting JSON-RPC server') !== -1) {
         logger.info('Ethermintd started');
-        resolve(ethermintdProc);
+        resolve(blockxdProc);
       }
     });
   });
 
   const timeoutPromise = new Promise((resolve, reject) => {
-    setTimeout(() => reject(new Error('Start ethermintd timeout!')), timeout);
+    setTimeout(() => reject(new Error('Start blockxd timeout!')), timeout);
   });
   return Promise.race([spawnPromise, timeoutPromise]);
 }

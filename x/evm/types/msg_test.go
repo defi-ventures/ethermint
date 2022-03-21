@@ -11,16 +11,16 @@ import (
 	"github.com/cosmos/cosmos-sdk/client"
 	"github.com/cosmos/cosmos-sdk/crypto/keyring"
 	sdk "github.com/cosmos/cosmos-sdk/types"
-	"github.com/tharsis/ethermint/crypto/ethsecp256k1"
-	"github.com/tharsis/ethermint/tests"
+	"github.com/defi-ventures/ethermint/crypto/ethsecp256k1"
+	"github.com/defi-ventures/ethermint/tests"
 
 	"github.com/ethereum/go-ethereum/common"
 	ethtypes "github.com/ethereum/go-ethereum/core/types"
 	"github.com/ethereum/go-ethereum/crypto"
 
-	"github.com/tharsis/ethermint/app"
-	"github.com/tharsis/ethermint/encoding"
-	"github.com/tharsis/ethermint/x/evm/types"
+	"github.com/defi-ventures/ethermint/app"
+	"github.com/defi-ventures/ethermint/encoding"
+	"github.com/defi-ventures/ethermint/x/evm/types"
 )
 
 const invalidFromAddress = "0x0000"
@@ -75,13 +75,13 @@ func (suite *MsgsTestSuite) TestMsgEthereumTx_BuildTx() {
 	err := msg.ValidateBasic()
 	suite.Require().NoError(err)
 
-	tx, err := msg.BuildTx(suite.clientCtx.TxConfig.NewTxBuilder(), "aphoton")
+	tx, err := msg.BuildTx(suite.clientCtx.TxConfig.NewTxBuilder(), "abcx")
 	suite.Require().NoError(err)
 
 	suite.Require().Empty(tx.GetMemo())
 	suite.Require().Empty(tx.GetTimeoutHeight())
 	suite.Require().Equal(uint64(100000), tx.GetGas())
-	suite.Require().Equal(sdk.NewCoins(sdk.NewCoin("aphoton", sdk.NewInt(100000))), tx.GetFee())
+	suite.Require().Equal(sdk.NewCoins(sdk.NewCoin("abcx", sdk.NewInt(100000))), tx.GetFee())
 }
 
 func (suite *MsgsTestSuite) TestMsgEthereumTx_ValidateBasic() {

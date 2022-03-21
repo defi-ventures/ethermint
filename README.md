@@ -12,11 +12,11 @@ URL - https://testnet-2.blockxnet.com
 
 Chain ID - 12345
 
-***Chain ID (testnet v1)***
+***Chain ID (testnet v2)***
 
 blockx_12345-12345
 
-***Steps to setup a validator for testnet v1***
+***Steps to setup a validator for testnet v2***
 
 1. Clone the repository
 
@@ -43,7 +43,7 @@ bash setup_validator.sh
 4. Replace the genesis file in ~/.blockxd/config/
 ```
 {
-   "genesis_time":"2022-03-21T17:53:40.332119466Z",
+   "genesis_time":"2022-03-21T18:42:23.852588903Z",
    "chain_id":"blockx_12345-12345",
    "initial_height":"1",
    "consensus_params":{
@@ -107,7 +107,7 @@ bash setup_validator.sh
                "coins":[
                   {
                      "denom":"abcx",
-                     "amount":"100000000000000000000000000"
+                     "amount":"1000000000000000000000000000"
                   }
                ]
             }
@@ -115,7 +115,7 @@ bash setup_validator.sh
          "supply":[
             {
                "denom":"abcx",
-               "amount":"100000000000000000000000000"
+               "amount":"1000000000000000000000000000"
             }
          ],
          "denom_metadata":[
@@ -245,7 +245,7 @@ bash setup_validator.sh
                         "validator_address":"ethmvaloper12fkhumzzmdjlph5dcj5hemzqlc663pf5chuumt",
                         "pubkey":{
                            "@type":"/cosmos.crypto.ed25519.PubKey",
-                           "key":"kZSNxFsdG8qg8Uiw9C3F1iZoQ73dNNZa/1/1dFXVpyI="
+                           "key":"Th8q3YUYkdyup1X+2iIGTysDXuoE0t9LpHRjUBrvqLs="
                         },
                         "value":{
                            "denom":"abcx",
@@ -253,7 +253,7 @@ bash setup_validator.sh
                         }
                      }
                   ],
-                  "memo":"ae06daf14b68027c3bc1523fa7545ddb414bd2ad@10.12.20.240:26656",
+                  "memo":"c76f0ff3f82665e995a2706ccf8bfe83dfbf88e0@10.12.20.240:26656",
                   "timeout_height":"0",
                   "extension_options":[
 
@@ -287,7 +287,7 @@ bash setup_validator.sh
                   }
                },
                "signatures":[
-                  "B2ueRGwpEB4mUuyyLgdSZ353RVhEJLsSzFQa65EIg8I4hV+WFZhO/Guhek5P/ipQe++iOMO0HuuOfQQnvIGPNgE="
+                  "gXxx3FUf8R0L7mngw+D1XmHkL4y+WnEiIeo8n5Hfu7ggjWyJnuz1gRwAaTArKCpMIv4iWW+IrcpMtgrMtdU47QE="
                ]
             }
          ]
@@ -456,7 +456,7 @@ bash setup_validator.sh
 
 5. Add the following in seeds, persistent_peers in ~/.blockxd/config/config.toml
 ```
-ae06daf14b68027c3bc1523fa7545ddb414bd2ad@35.170.78.143:26656,8bf553280fdb5b9f67661339de4c8fc24d1e429e@44.199.206.198:26656
+c76f0ff3f82665e995a2706ccf8bfe83dfbf88e0@35.170.78.143:26656,8bf553280fdb5b9f67661339de4c8fc24d1e429e@44.199.206.198:26656
 ```
 
 6. Reset the local chain config
@@ -472,7 +472,7 @@ cd ~/ethermint
 
 8. Acquire test tokens from the team for the address generated from the mnemonic
 
-9. Add your key to keyring
+9. Add your key to keyring if you have not already added
 ```bash
 ./build/blockxd keys add <> --recover
 ```

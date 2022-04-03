@@ -2,13 +2,15 @@
 
 KEY="blockxtestkey-1"
 CHAINID="blockx_12345-12345"
-MONIKER=""
-MNEMONIC=""
+MONIKER="blockxtestkey-1"
+MNEMONIC="student snap side castle clog bleak inspire goddess arm mixture egg glory scare spread crime"
 
 # remove existing daemon and client
 rm -rf ~/.blockx*
 
 make build
+
+echo $MNEMONIC | ./build/blockxd keys add $KEY --recover
 
 ./build/blockxd config keyring-backend $KEYRING
 ./build/blockxd config chain-id $CHAINID

@@ -21,14 +21,13 @@ rm -rf ~/.blockxd*
 
 make build
 
+echo $MNEMONIC | ./build/blockxd keys add $KEY --recover
+
 ./build/blockxd config keyring-backend $KEYRING
 ./build/blockxd config chain-id $CHAINID
 
 # Set moniker and chain-id for Ethermint (Moniker can be anything, chain-id must be an integer)
 ./build/blockxd init $MONIKER --chain-id $CHAINID
-
-# if $KEY exists it should be deleted
-echo $MNEMONIC | ./build/blockxd keys add $KEY --recover
 
 # Change parameter token denominations to abcx
 cat $HOME/.blockxd/config/genesis.json | jq '.app_state["staking"]["params"]["bond_denom"]="abcx"' > $HOME/.blockxd/config/tmp_genesis.json && mv $HOME/.blockxd/config/tmp_genesis.json $HOME/.blockxd/config/genesis.json

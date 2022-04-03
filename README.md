@@ -33,8 +33,7 @@ apt-get install make build-essential jq
 snap install go --classic
 ```
 
-3. Change the value of KEY, CHAINID, MONIKER, MNEMONIC in validator_node_setup.sh before running the validator node setup.
-You need to generate a mnemonic for the setup
+3. Change the value of KEY, CHAINID, MONIKER, MNEMONIC in setup_validator.sh before running the validator node setup.
 ```bash
 cd ~/ethermint
 bash setup_validator.sh
@@ -467,17 +466,12 @@ cd ~/ethermint
 
 7. Start local node and check if its syncing
 ```bash
-./build/blockxd start --pruning=nothing --evm.tracer=json "--trace" --log_level "info" --json-rpc.api eth,txpool,net,web3 --api.enable
+./build/blockxd start --pruning=nothing --evm.tracer=json "--trace" --log_level "info"
 ```
 
 8. Acquire test tokens from the team for the address generated from the mnemonic
 
-9. Add your key to keyring if you have not already added
-```bash
-./build/blockxd keys add <> --recover
-```
-
-10. Run create validator command to become a validator in the network after the blockchain syncs completely(change values in commands accordingly).
+9. Run create validator command to become a validator in the network after the blockchain syncs completely(change values in commands accordingly).
 Amount should be of the format - <x>abcx
 ```bash
 ./build/blockxd tx staking create-validator --amount=<> --pubkey=$(./build/blockxd tendermint show-validator) --moniker=<> --chain-id=blockx_12345-12345 --commission-rate="0.10" --commission-max-rate="0.20" --commission-max-change-rate="0.01" --min-self-delegation="1" --gas="auto" --from=<>
